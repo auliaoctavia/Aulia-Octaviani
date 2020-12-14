@@ -1,0 +1,591 @@
+import processing.serial.*;
+Serial portku;
+
+PFont tulisan;
+String stringnilai;
+String historynilai;
+String portcom;
+String portcom2;
+String portfinal;
+
+String nilai01;
+String nilai02;
+String nilai03;
+String nilai04;
+String nilai05;
+String nilai06;
+String nilai07;
+String nilai08;
+String nilai09;
+String nilai10;
+String nilai11;
+String nilai12;
+String nilai13;
+String nilai14;
+String nilai15;
+String nilai16;
+String nilai17;
+String nilai18;
+String nilai19;
+String nilai20;
+String nilai21;
+String nilai22;
+String nilai23;
+String nilai24;
+String nilai25;
+String nilai26;
+String nilai27;
+String nilai28;
+String nilai29;
+String nilai30;
+
+String gaya01;
+String gaya02;
+String gaya03;
+String gaya04;
+String gaya05;
+String gaya06;
+String gaya07;
+String gaya08;
+String gaya09;
+String gaya10;
+String gaya11;
+String gaya12;
+String gaya13;
+String gaya14;
+String gaya15;
+String gaya16;
+String gaya17;
+String gaya18;
+String gaya19;
+String gaya20;
+String gaya21;
+String gaya22;
+String gaya23;
+String gaya24;
+String gaya25;
+String gaya26;
+String gaya27;
+String gaya28;
+String gaya29;
+String gaya30;
+
+
+int iterasi;
+
+String[] listSerial;
+
+int set1;
+int set_display;
+int read_port;
+int posisi_tab;
+
+void setup(){
+ size(510,1000); 
+ smooth();
+ tulisan = loadFont("AdobeHeitiStd-Regular-20.vlw");
+ textFont(tulisan);
+ stringnilai = "0.00+0.00";
+ historynilai = " +  ";
+ delay(1000);
+ portcom = "COM";
+ portcom2 = null;
+ portfinal = null;
+ set1 = 0;
+ set_display = 0;
+ read_port = 0;
+ posisi_tab = 10;
+ 
+ nilai01 = "0.00";
+ nilai02 = "0.00";
+ nilai03 = "0.00";
+ nilai04 = "0.00";
+ nilai05 = "0.00";
+ nilai06 = "0.00";
+ nilai07 = "0.00";
+ nilai08 = "0.00";
+ nilai09 = "0.00";
+ nilai10 = "0.00";
+ nilai11 = "0.00";
+ nilai12 = "0.00";
+ nilai13 = "0.00";
+ nilai14 = "0.00";
+ nilai15 = "0.00";
+ nilai16 = "0.00";
+ nilai17 = "0.00";
+ nilai18 = "0.00";
+ nilai19 = "0.00";
+ nilai20 = "0.00";
+ nilai21 = "0.00";
+ nilai22 = "0.00";
+ nilai23 = "0.00";
+ nilai24 = "0.00";
+ nilai25 = "0.00";
+ nilai26 = "0.00";
+ nilai27 = "0.00";
+ nilai28 = "0.00";
+ nilai29 = "0.00";
+ nilai30 = "0.00";
+ 
+
+ gaya01 = "0.00";
+ gaya02 = "0.00";
+ gaya03 = "0.00";
+ gaya04 = "0.00";
+ gaya05 = "0.00";
+ gaya06 = "0.00";
+ gaya07 = "0.00";
+ gaya08 = "0.00";
+ gaya09 = "0.00";
+ gaya10 = "0.00";
+ gaya11 = "0.00";
+ gaya12 = "0.00";
+ gaya13 = "0.00";
+ gaya14 = "0.00";
+ gaya15 = "0.00";
+ gaya16 = "0.00";
+ gaya17 = "0.00";
+ gaya18 = "0.00";
+ gaya19 = "0.00";
+ gaya20 = "0.00";
+ gaya21 = "0.00";
+ gaya22 = "0.00";
+ gaya23 = "0.00";
+ gaya24 = "0.00";
+ gaya25 = "0.00";
+ gaya26 = "0.00";
+ gaya27 = "0.00";
+ gaya28 = "0.00";
+ gaya29 = "0.00";
+ gaya30 = "0.00";
+
+ iterasi = 0;
+}
+
+void draw(){
+ background(128); 
+ materialDesign();
+ textSize(14);
+ text("port",25,80);
+ if (portcom == null){
+   text("  ", 60,80);
+ } else {
+   text(portcom,60,80);
+ }
+ 
+ if (set1 == 0){
+   text("Sambungkan",130,80);
+ } else if (set1 == 1){
+   text("Putus",155,80);
+   portku = new Serial(this, portcom, 9600);
+   portku.bufferUntil('\n');
+   set1 = 2;
+   read_port = 1;
+ }
+ 
+ 
+ text("Port Tersedia:", 310, 80);
+ String[] listSerial = Serial.list();
+ int x1 = 420;
+ for (int k = 0; k<listSerial.length; k++){
+   text(listSerial[k],x1,80);
+   x1 = x1 + 50;
+ }
+ 
+ if (set_display == 1){
+     stroke(35,37,41);
+     fill(119,124,135);
+     rect(25,115,580,80);
+ } else if (set_display == 0){
+     konsol_materialDesign();
+     
+     if (read_port == 1){
+       if (portku.available()>0) {
+         stringnilai = portku.readStringUntil('\n');
+       } else {
+         stringnilai = historynilai;
+       }
+     }
+  
+     historynilai = stringnilai;
+     String[] nilai = split(stringnilai, '+');
+    
+     if (nilai[0].length() > 1){
+       text(nilai[0],  190,142);
+       text(nilai[1], 190,182);
+     } else {
+       text(nilai[0],  90,180);
+       text(nilai[1], 235,180);
+     }
+     
+     if (nilai[0].equals("0.00") == false){
+       
+       iterasi = iterasi + 1000;
+       if(iterasi == 0){
+         nilai01 = nilai[0];
+         gaya01 = nilai[1];
+       }
+              if(iterasi == 1000){
+         nilai02 = nilai[0];
+         gaya02 = nilai[1];
+       }
+              if(iterasi == 2000){
+         nilai03 = nilai[0];
+         gaya03 = nilai[1];
+       }
+              if(iterasi == 3000){
+         nilai04 = nilai[0];
+         gaya04 = nilai[1];
+       }
+              if(iterasi == 4000){
+         nilai05 = nilai[0];
+         gaya05 = nilai[1];
+       }
+              if(iterasi == 5000){
+         nilai06 = nilai[0];
+         gaya06 = nilai[1];
+       }
+              if(iterasi == 6000){
+         nilai07 = nilai[0];
+         gaya07 = nilai[1];
+       }
+              if(iterasi == 7000){
+         nilai08 = nilai[0];
+         gaya08 = nilai[1];
+       }
+              if(iterasi == 8000){
+         nilai09 = nilai[0];
+         gaya09 = nilai[1];
+       }
+              if(iterasi == 9000){
+         nilai10 = nilai[0];
+         gaya10 = nilai[1];
+       }
+              if(iterasi == 10000){
+         nilai11 = nilai[0];
+         gaya11 = nilai[1];
+       }
+              if(iterasi == 11000){
+         nilai12 = nilai[0];
+         gaya12 = nilai[1];
+       }
+              if(iterasi == 12000){
+         nilai13 = nilai[0];
+         gaya13 = nilai[1];
+       }
+              if(iterasi == 13000){
+         nilai14 = nilai[0];
+         gaya14 = nilai[1];
+       }
+              if(iterasi == 14000){
+         nilai15 = nilai[0];
+         gaya15 = nilai[1];
+       }
+              if(iterasi == 15000){
+         nilai16 = nilai[0];
+         gaya16 = nilai[1];
+       }
+              if(iterasi == 16000){
+         nilai17 = nilai[0];
+         gaya17 = nilai[1];
+       }
+              if(iterasi == 17000){
+         nilai18 = nilai[0];
+         gaya18 = nilai[1];
+       }
+              if(iterasi == 18000){
+         nilai19 = nilai[0];
+         gaya19 = nilai[1];
+       }
+              if(iterasi == 19000){
+         nilai20 = nilai[0];
+         gaya20 = nilai[1];
+       }
+              if(iterasi == 20000){
+         nilai21 = nilai[0];
+         gaya21 = nilai[1];
+       }
+              if(iterasi == 21000){
+         nilai22 = nilai[0];
+         gaya22 = nilai[1];
+       }
+              if(iterasi == 22000){
+         nilai23 = nilai[0];
+         gaya23 = nilai[1];
+       }
+              if(iterasi == 23000){
+         nilai24 = nilai[0];
+         gaya24 = nilai[1];
+       }
+              if(iterasi == 24000){
+         nilai25 = nilai[0];
+         gaya25 = nilai[1];
+       }
+              if(iterasi == 25000){
+         nilai26 = nilai[0];
+         gaya26 = nilai[1];
+       }
+              if(iterasi == 26000){
+         nilai27 = nilai[0];
+         gaya27 = nilai[1];
+       }
+              if(iterasi == 27000){
+         nilai28 = nilai[0];
+         gaya28 = nilai[1];
+       }
+              if(iterasi == 28000){
+         nilai29 = nilai[0];
+         gaya29 = nilai[1];
+       }
+              if(iterasi == 29000){
+         nilai30 = nilai[0];
+         gaya30 = nilai[1];
+       }
+     } else if (nilai[0].equals("0.00") == true){
+       iterasi = 0;
+         nilai01 = "0.00";
+         nilai02 = "0.00";
+         nilai03 = "0.00";
+         nilai04 = "0.00";
+         nilai05 = "0.00";
+         nilai06 = "0.00";
+         nilai07 = "0.00";
+         nilai08 = "0.00";
+         nilai09 = "0.00";
+         nilai10 = "0.00";
+         nilai11 = "0.00";
+         nilai12 = "0.00";
+         nilai13 = "0.00";
+         nilai14 = "0.00";
+         nilai15 = "0.00";
+         nilai16 = "0.00";
+         nilai17 = "0.00";
+         nilai18 = "0.00";
+         nilai19 = "0.00";
+         nilai20 = "0.00";
+         nilai21 = "0.00";
+         nilai22 = "0.00";
+         nilai23 = "0.00";
+         nilai24 = "0.00";
+         nilai25 = "0.00";
+         nilai26 = "0.00";
+         nilai27 = "0.00";
+         nilai28 = "0.00";
+         nilai29 = "0.00";
+         nilai30 = "0.00";
+         
+         gaya01 = "0.00";
+         gaya02 = "0.00";
+         gaya03 = "0.00";
+         gaya04 = "0.00";
+         gaya05 = "0.00";
+         gaya06 = "0.00";
+         gaya07 = "0.00";
+         gaya08 = "0.00";
+         gaya09 = "0.00";
+         gaya10 = "0.00";
+         gaya11 = "0.00";
+         gaya12 = "0.00";
+         gaya13 = "0.00";
+         gaya14 = "0.00";
+         gaya15 = "0.00";
+         gaya16 = "0.00";
+         gaya17 = "0.00";
+         gaya18 = "0.00";
+         gaya19 = "0.00";
+         gaya20 = "0.00";
+         gaya21 = "0.00";
+         gaya22 = "0.00";
+         gaya23 = "0.00";
+         gaya24 = "0.00";
+         gaya25 = "0.00";
+         gaya26 = "0.00";
+         gaya27 = "0.00";
+         gaya28 = "0.00";
+         gaya29 = "0.00";
+         gaya30 = "0.00";
+       
+     }
+     
+     text("0.10", 240,220);
+     text("0.20", 240,240);
+     text("0.30", 240,260);
+     text("0.40", 240,280);
+     text("0.50", 240,300);
+     text("0.60", 240,320);
+     text("0.70", 240,340);
+     text("0.80", 240,360);
+     text("0.90", 240,380);
+     text("1.00", 240,400);
+     text("1.10", 240,420);
+     text("1.20", 240,440);
+     text("1.30", 240,460);
+     text("1.40", 240,480);
+     text("1.50", 240,500);
+     text("1.60", 240,520);
+     text("1.70", 240,540);
+     text("1.80", 240,560);
+     text("1.90", 240,580);
+     text("2.00", 240,600);
+     text("2.10", 240,620);
+     text("2.20", 240,640);
+     text("2.30", 240,660);
+     text("2.40", 240,680);
+     text("2.50", 240,700);
+     text("2.60", 240,720);
+     text("2.70", 240,740);
+     text("2.80", 240,760);
+     text("2.90", 240,780);
+     text("3.00", 240,800);
+
+     
+     text(nilai01, 300,220);
+     text(nilai02, 300,240);
+     text(nilai03, 300,260);
+     text(nilai04, 300,280);
+     text(nilai05, 300,300);
+     text(nilai06, 300,320);
+     text(nilai07, 300,340);
+     text(nilai08, 300,360);
+     text(nilai09, 300,380);
+     text(nilai10, 300,400);
+     text(nilai11, 300,420);
+     text(nilai12, 300,440);
+     text(nilai13, 300,460);
+     text(nilai14, 300,480);
+     text(nilai15, 300,500);
+     text(nilai16, 300,520);
+     text(nilai17, 300,540);
+     text(nilai18, 300,560);
+     text(nilai19, 300,580);
+     text(nilai20, 300,600);
+     text(nilai21, 300,620);
+     text(nilai22, 300,640);
+     text(nilai23, 300,660);
+     text(nilai24, 300,680);
+     text(nilai25, 300,700);
+     text(nilai26, 300,720);
+     text(nilai27, 300,740);
+     text(nilai28, 300,760);
+     text(nilai29, 300,780);
+     text(nilai30, 300,800);
+     
+     text(gaya01, 360,220);
+     text(gaya02, 360,240);
+     text(gaya03, 360,260);
+     text(gaya04, 360,280);
+     text(gaya05, 360,300);
+     text(gaya06, 360,320);
+     text(gaya07, 360,340);
+     text(gaya08, 360,360);
+     text(gaya09, 360,380);
+     text(gaya10, 360,400);
+     text(gaya11, 360,420);
+     text(gaya12, 360,440);
+     text(gaya13, 360,460);
+     text(gaya14, 360,480);
+     text(gaya15, 360,500);
+     text(gaya16, 360,520);
+     text(gaya17, 360,540);
+     text(gaya18, 360,560);
+     text(gaya19, 360,580);
+     text(gaya20, 360,600);
+     text(gaya21, 360,620);
+     text(gaya22, 360,640);
+     text(gaya23, 360,660);
+     text(gaya24, 360,680);
+     text(gaya25, 360,700);
+     text(gaya26, 360,720);
+     text(gaya27, 360,740);
+     text(gaya28, 360,760);
+     text(gaya29, 360,780);
+     text(gaya30, 360,800);
+     println(nilai[0]);
+     
+ }
+}
+
+void keyPressed() {
+  if (keyCode == BACKSPACE) {
+    if (portcom.length() > 0) {
+      portcom = portcom.substring(0, portcom.length()-1);
+    }
+  } else if (keyCode == DELETE) {
+    portcom = "";
+  } else if (keyCode != SHIFT && keyCode != CONTROL && keyCode != ALT) {
+    portcom = portcom + String.valueOf(key);
+  } 
+}
+
+void mouseClicked() {
+ int OKEX = 120, OKEY = 65;
+ int hapusX = 230, hapusY = 65;
+ int menuX = 500, menuY = 85;
+ int konsolX = 420, konsolY = 85;
+ if (mouseX>hapusX && mouseX<hapusX+59 && mouseY>hapusY && mouseY<hapusY+20) {
+   portcom = "COM";
+ } else if(mouseX>OKEX && mouseX<OKEX+105 && mouseY>OKEY && mouseY<OKEY+20 && set1 == 0) {
+   set1 = 1;
+ } else if(mouseX>OKEX && mouseX<OKEX+105 && mouseY>OKEY && mouseY<OKEY+20 && set1 == 1) {
+   set1 = 0;
+ } else  if (mouseX>menuX && mouseX<menuX+59 && mouseY>menuY && mouseY<menuY+20 && set_display == 0) {
+   set_display = 1;
+ } else if (mouseX>konsolX && mouseX<konsolX+100 && mouseY>konsolY && mouseY<konsolY+20 && set_display == 1) {
+   set_display = 0;
+ }
+   
+}
+
+void tambahFingger(){
+  
+}
+
+void materialDesign(){
+ textSize(36);
+ fill(3,255,3);
+ text("Praktikum Elastisitas Kawat",25,55);
+ 
+ int OKEX = 120, OKEY = 65;
+ if (mouseX>OKEX && mouseX<OKEX+105 && mouseY>OKEY && mouseY<OKEY+20) {
+   fill (255,3,3); // merah
+ } else {
+   fill (3,3,255); // biru
+ }
+ stroke(0);
+ rect(OKEX,OKEY,100,20,5);
+ textSize(14);
+ fill(255,255,255);
+ 
+  int hapusX = 230, hapusY = 65;
+ if (mouseX>hapusX && mouseX<hapusX+59 && mouseY>hapusY && mouseY<hapusY+20) {
+   fill (255,3,3); // merah
+ } else {
+   fill (3,3,255); // biru
+ }
+ stroke(0);
+ rect(hapusX,hapusY,59,20,5);
+ textSize(14);
+ fill(255,255,255);
+ text("Hapus",hapusX+10,80);
+  
+ int konsolX = 420, konsolY = 85;
+ if (mouseX>konsolX && mouseX<konsolX+63 && mouseY>konsolY && mouseY<konsolY+20) {
+   fill (255,3,3); // merah
+ } else {
+   fill (3,3,255); // biru
+ }
+ stroke(0);
+ rect(konsolX,konsolY,63,20,5);
+ textSize(14);
+ fill(255,255,255);
+ text("Konsol",konsolX+10,101);
+}
+
+void konsol_materialDesign(){
+     textSize(18);
+     text("JARAK :", 90, 142);
+     text("GAYA  :", 90, 182);
+     
+     text("mm", 260, 142);
+     text("N", 260, 182);
+}
